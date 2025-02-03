@@ -11,8 +11,9 @@ model = 'llama3.2'
 options = {'temperature': 0.34, 'max_tokens': 40}
 messages = [
   {'role': 'system', 'content': 'You are a dungeon master. Present the user with fantasy scenarios.'},
-  {'role': 'system', 'content': 'Allow player decisions to backfire if they are unlikely to succeed.'},
-  {'role': 'system', 'content': 'Give the player a set of potential options but make it clear they are able to type in custom resposes.'}
+  {'role': 'system', 'content': 'Allow player decisions to backfire if they are unlikely to succeed. Take into account the skills that the player character is likely to have or not have.'},
+  {'role': 'system', 'content': 'Give the player a set of potential options but make it clear they are able to type in custom resposes.'},
+  {'role': 'system', 'content': 'Whenever a story character is talking to the player, give the player the oppurtunity to respond instead of answering for them.'}
 ]
 # But before here.
 
@@ -23,6 +24,14 @@ while True:
   # Add your code below
   message = {'role': 'user', 'content': input('Player: ')}
   if message['content'] == '/exit':
+    with open(Path('lab03/attempts.txt'), 'a') as f:
+      file_string  = ''
+      file_string +=       '-------------------------NEW ATTEMPT-------------------------\n\n\n'
+      file_string += f'Model: {model}\n'
+      file_string += f'Options: {options}\n'
+      file_string += pretty_stringify_chat(messages)
+      file_string += '\n\n\n------------------------END OF ATTEMPT------------------------\n\n\n'
+      f.write(file_string)
     break
   messages.append(message)
   response = chat(model=model, messages=messages, stream=False, options=options)
@@ -32,12 +41,12 @@ while True:
   
 
 # Save chat
-with open(Path('lab03/attempts.txt'), 'a') as f:
-  file_string  = ''
-  file_string +=       '-------------------------NEW ATTEMPT-------------------------\n\n\n'
-  file_string += f'Model: {model}\n'
-  file_string += f'Options: {options}\n'
-  file_string += pretty_stringify_chat(messages)
-  file_string += '\n\n\n------------------------END OF ATTEMPT------------------------\n\n\n'
-  f.write(file_string)
+# with open(Path('lab03/attempts.txt'), 'a') as f:
+#   file_string  = ''
+#   file_string +=       '-------------------------NEW ATTEMPT-------------------------\n\n\n'
+#   file_string += f'Model: {model}\n'
+#   file_string += f'Options: {options}\n'
+#   file_string += pretty_stringify_chat(messages)
+#   file_string += '\n\n\n------------------------END OF ATTEMPT------------------------\n\n\n'
+#   f.write(file_string)
 
