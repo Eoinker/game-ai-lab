@@ -24,6 +24,13 @@ def roll_for(skill, dc, player):
 
 def process_response(self, response):
     # Fill out this function to process the response from the LLM
+    if response.message.tool_calls:
+        self.messages.append({'role': 'tool',
+                            'name': response.message.tool_calls[0].function.name, 
+                            'arguments': response.message.tool_calls[0].function.arguments,
+                            'content': process_function_call(response.message.tool_calls[0].function)
+                            })
+        response = self.completion()
     # and make the function call 
     return response
 

@@ -29,7 +29,7 @@ if __name__ ==  '__main__':
     # run lab04.py to test your template interactively
     trader_template_file = 'lab04/lab04_trader_chat.json'
     run_console_chat(template_file=trader_template_file,
-                     inventory= '["apple pie", "pumpkin bread", "blueberry muffin"]',
-                     sign='Owen',
+                     inventory= '["milk", "eggs", "flour"]',
+                     sign='Owen Larmon',
                      end_regex=r'TRADE(.*)DONE')
     
